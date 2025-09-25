@@ -21,8 +21,13 @@ hbs.registerHelper("uppercase", (str) => (typeof str === "string" ? str.toUpperC
 // Helper para comparar (opcional)
 hbs.registerHelper("eq", (a, b) => a === b);
 
-// Archivos estáticos (imágenes, CSS, JS del front)
-app.use(express.static(path.join(__dirname, "public")));\n// Middleware para variables globales de vistas (e.g., año)\napp.use((req, res, next) => {\n  res.locals.year = new Date().getFullYear();\n  next();\n});\n
+app.use(express.static(path.join(__dirname, "public")));
+
+// Middleware para variables globales de vistas (e.g., año)
+app.use((req, res, next) => {
+  res.locals.year = new Date().getFullYear();
+  next();
+});
 
 // Rutas
 app.use("/", router);

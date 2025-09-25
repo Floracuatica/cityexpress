@@ -40,5 +40,4 @@ src/
       cityCard.hbs
   public/
     css/styles.css
-    img/ (coloca aquí tus imágenes)
-```
+    img/ (imágenes)

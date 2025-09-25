@@ -21,6 +21,7 @@ hbs.registerHelper("uppercase", (str) => (typeof str === "string" ? str.toUpperC
 // Helper para comparar (opcional)
 hbs.registerHelper("eq", (a, b) => a === b);
 
+// Archivos estáticos (imágenes, CSS, JS del front)
 app.use(express.static(path.join(__dirname, "public")));
 
 // Middleware para variables globales de vistas (e.g., año)

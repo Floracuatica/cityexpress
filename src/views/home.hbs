@@ -1,0 +1,10 @@
+{{!< layouts/main }} 
+<section>
+  <h1>Guía de Ciudades</h1>
+  <p>Explora algunas ciudades del mundo. Haz clic en una para ver más detalles.</p>
+  <div class="grid">
+    {{#each cities}}
+      {{> cityCard this}}
+    {{/each}}
+  </div>
+</section>

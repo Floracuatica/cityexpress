@@ -1,0 +1,27 @@
+{{!< layouts/main }}
+<article class="city">
+  <header class="city-header">
+    <h1>{{uppercase city.name}}</h1>
+    <p class="muted">{{city.country}}</p>
+  </header>
+  <img class="hero" src="{{city.image}}" alt="{{city.name}}" />
+  <section class="content">
+    <h2>Descripción</h2>
+    <p>{{city.description}}</p>
+
+    <h2>Historia</h2>
+    <p>{{city.history}}</p>
+
+    <h2>Puntos turísticos</h2>
+    <ul>
+      {{#each city.attractions}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+
+    <h2>Clima</h2>
+    <p>{{city.climate}}</p>
+
+    <p><a class="button outline" href="/">← Volver al inicio</a></p>
+  </section>
+</article>

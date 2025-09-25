@@ -1,6 +1,6 @@
 import path from "path";
 import express from "express";
-import hbs from "hbs";
+import { engine } from "express-handlebars";
 import { fileURLToPath } from "url";
 import router from "./routes/index.js";
 
@@ -10,30 +10,28 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configurar carpetas de vistas y parciales
-app.set("views", path.join(__dirname, "views"));
+// Motor Handlebars con layouts y parciales
+app.engine("hbs", engine({
+  extname: ".hbs",
+  layoutsDir: path.join(__dirname, "views", "layouts"),
+  partialsDir: path.join(__dirname, "views", "partials"),
+  defaultLayout: "main",
+  helpers: {
+    uppercase: (s) => (typeof s === "string" ? s.toUpperCase() : ""),
+    eq: (a, b) => a === b
+  }
+}));
 app.set("view engine", "hbs");
-hbs.registerPartials(path.join(__dirname, "views", "partials"));
+app.set("views", path.join(__dirname, "views"));
 
-// Helper global: uppercase
-hbs.registerHelper("uppercase", (str) => (typeof str === "string" ? str.toUpperCase() : ""));
-
-// Helper para comparar (opcional)
-hbs.registerHelper("eq", (a, b) => a === b);
-
-// Archivos estáticos (imágenes, CSS, JS del front)
+// Estáticos y variables globales
 app.use(express.static(path.join(__dirname, "public")));
-
-// Middleware para variables globales de vistas (e.g., año)
-app.use((req, res, next) => {
-  res.locals.year = new Date().getFullYear();
-  next();
-});
+app.use((req, res, next) => { res.locals.year = new Date().getFullYear(); next(); });
 
 // Rutas
 app.use("/", router);
 
-// Ruta 404 final (cualquier otra ruta)
+// 404
 app.use((req, res) => {
   res.status(404).render("404", {
     title: "Página no encontrada",
@@ -41,6 +39,7 @@ app.use((req, res) => {
   });
 });
 
+// Para Render
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
